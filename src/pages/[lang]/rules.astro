@@ -1,7 +1,7 @@
 ---
-    import Layout from '../layouts/Layout.astro';
+    import Layout from '../../layouts/Layout.astro';
 
-	import { languages } from '../i18n/ui';
+	import { languages } from '../../i18n/ui';
 	export function getStaticPaths() {
 		return Object.keys(languages).map((lang) => ({
 			params: { lang }, props: { lang }

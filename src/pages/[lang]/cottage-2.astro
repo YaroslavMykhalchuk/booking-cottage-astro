@@ -1,8 +1,8 @@
 ---
-    import Layout from '../layouts/Layout.astro';
-	import BookingForm from '../components/BookingForm.astro';
-	
-	import { languages } from '../i18n/ui';
+    import Layout from '../../layouts/Layout.astro';
+	import BookingForm from '../../components/BookingForm.astro';
+
+	import { languages } from '../../i18n/ui';
 	export function getStaticPaths() {
 		return Object.keys(languages).map((lang) => ({
 			params: { lang }, props: { lang }
@@ -10,10 +10,10 @@
 	}
 ---
 
-<Layout title="Cottage 1 - Booking cottage">
+<Layout title="Cottage 2 - Booking cottage">
 	<div id="container" class="container">
 		<main>
-			<h1 class="h1 pt-4">Welcome to cottage 1</h1>
+			<h1 class="h1 pt-4">Welcome to cottage 2</h1>
 			<p class="py-3 fs-5">
 				Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et modi placeat excepturi, possimus enim nulla in totam quam aspernatur consequatur odit expedita culpa mollitia ad eum repellat suscipit qui obcaecati quasi reprehenderit iusto? Et maxime velit autem dolore minima. Reprehenderit ex voluptatem accusantium aliquam id, culpa animi laudantium sint, aliquid nobis in. Dignissimos eum iure accusantium amet. Eligendi illo dolore reiciendis itaque pariatur aspernatur aperiam earum, rerum sunt molestias illum veritatis nihil sint, necessitatibus, at corporis placeat praesentium error nisi.
 			</p>
@@ -44,8 +44,8 @@
 			</div>
 
 			<div class="booking-block">
-				<h2 class="h2 mt-4 mb-3 text-center">Book Cottage 1</h2>
-				<BookingForm cottage="0" client:load/>
+				<h2 class="h2 mt-4 mb-3 text-center">Book Cottage 2</h2>
+				<BookingForm cottage="1" client:load/>
 			</div>
 		</main>
 	</div>
