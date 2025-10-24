@@ -1,0 +1,52 @@
+---
+export interface Props {
+  primarySrc: string;
+  hoverSrc?: string;
+  title?: string;
+  href?: string;
+  alt?: string;
+}
+
+const {
+  primarySrc = "",
+  hoverSrc,
+  title = "",
+  href = "#",
+  alt = "",
+} = Astro.props;
+---
+  <a class="d-block text-decoration-none w-100 h-100" href={href} aria-label={title}>
+  <div class="card text-bg-dark h-100">
+    <div class="position-relative overflow-hidden h-100">
+      <img
+        src={primarySrc}
+        class="img-base position-absolute top-0 start-0 w-100 h-100 object-fit-cover"
+        alt={alt || "Cottage image"}
+        loading="lazy"
+      />
+      {hoverSrc && (
+        <img
+          src={hoverSrc}
+          class="img-hover position-absolute top-0 start-0 w-100 h-100 object-fit-cover"
+          alt={alt || "Cottage hover image"}
+          loading="lazy"
+        />
+      )}
+      {title && (
+        <div class="card-img-overlay d-flex align-items-center justify-content-center p-2 overlay">
+          <h6 class="mb-0 fs-1">{title}</h6>
+        </div>
+      )}
+    </div>
+  </div>
+  </a>
+
+<style>
+  .img-base, .img-hover { transition: opacity .5s ease, transform .3s ease; backface-visibility: hidden; }
+  .img-base { opacity: 1;   transform: scale(1);    z-index: 1; }
+  .img-hover{ opacity: 0;   transform: scale(1.04); z-index: 2; }
+  .card:hover .img-hover, .card:focus-within .img-hover { opacity: 1; }
+  .card:hover .img-base,  .card:focus-within .img-base  { opacity: 0; }
+  .overlay { pointer-events: none; background: linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,.45) 100%); z-index: 3; }
+  @media (prefers-reduced-motion: reduce) { .img-base, .img-hover { transition: none; } }
+</style>

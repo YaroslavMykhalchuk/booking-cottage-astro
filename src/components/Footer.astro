@@ -1,0 +1,57 @@
+---
+/* /src/components/Footer.astro */
+const links = [
+  { title: "Home",        href: "/" },
+  { title: "Cottage 1",   href: "/cottage-1" },
+  { title: "Cottage 2",   href: "/cottage-2" },
+  { title: "Cottage rules", href: "/rules" },
+  { title: "Contact",     href: "/contact" },
+];
+---
+
+<footer class="py-3 my-4 border-top">
+    <ul class="nav justify-content-center pb-3">
+        {links.map((link) => (
+        <li class="nav-item">
+            <a href={link.href} class="nav-link px-2 text-body-secondary">
+            {link.title}
+            </a>
+        </li>
+        ))}
+    </ul>
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center container">
+        <div class="col-md-4 d-flex align-items-center">
+            <a
+                href="/"
+                class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1"
+                aria-label="Cottage booking">
+                <svg class="bi" width="30" height="24" aria-hidden="true">
+                <use xlink:href="/favicon.svg"></use>
+                </svg>
+            </a>
+            <span class="mb-3 mb-md-0 text-body-secondary">&copy; 2025 Cottage booking, Inc</span>
+        </div>
+        
+
+        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+            <li class="ms-3">
+                <a class="text-body-secondary text-decoration-none" href="#"
+                    aria-label="Public offer" target="_blank" rel="noopener">
+                    <i class="fa-regular fa-file"></i>
+                    <span>Public offer</span>
+                </a>
+            </li>
+            <li class="ms-3">
+                <a class="text-body-secondary" href="https://www.instagram.com" aria-label="Instagram" target="_blank" rel="noopener">
+                <img src="/instagram.svg" alt="Instagram" width="20" height="20">
+                </a>
+            </li>
+            <li class="ms-3">
+                <a class="text-body-secondary" href="https://www.facebook.com" aria-label="Facebook" target="_blank" rel="noopener">
+                <img src="/facebook.svg" alt="Facebook" width="20" height="20">
+                </a>
+            </li>
+        </ul>
+    </div>
+</footer>

@@ -1,0 +1,66 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ContactForm from '../components/ContactForm.astro';
+---
+
+<Layout title="Contact Us - Booking cottage">
+	<div id="container" class="container">
+		<main>
+			<h1 class="h1 pt-4">Contact Us</h1>
+			<ContactForm />
+
+			<div class="my-4">
+				<h3 class="h3">Check-in schedule</h3>
+				<div class="d-flex gap-3">
+					<i class="fa-regular fa-clock d-flex align-self-center"></i>
+					<div >
+						<p class="mb-2">check-in time at 3:00 PM</p>
+						<p class="mb-0">check-out time at 12:00 local time</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="cottage-location">
+				<h3 class="h3">Locations:</h3>
+
+				<div class="my-3">
+					<h4 class="h5">Cottage 1</h4>
+					<div class="map-block rounded-3">
+						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3040.197565341238!2d30.53196599244415!3d50.44732681434743!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4cfad235994f7%3A0x1a8037e6d74a71d9!2z0LLRg9C70LjRhtGPINCc0LjRhdCw0LnQu9CwINCT0YDRg9GI0LXQstGB0YzQutC-0LPQviwgNSwg0JrQuNGX0LIsIDAyMDAw!5e1!3m2!1suk!2sua!4v1761307365885!5m2!1suk!2sua" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+					</div>
+					<div class="fs-6 mt-4">
+						<p class="mb-1">Kyiv region</p>
+						<p class="mb-1">Kyiv city</p>
+						<p class="mb-1">Hryshevskoho st. 5</p>
+					</div>
+				</div>
+
+				<div class="my-3">
+					<h4 class="h5">Cottage 2</h4>
+					<div class="map-block rounded-3">
+						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3040.197565341238!2d30.53196599244415!3d50.44732681434743!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4cfad235994f7%3A0x1a8037e6d74a71d9!2z0LLRg9C70LjRhtGPINCc0LjRhdCw0LnQu9CwINCT0YDRg9GI0LXQstGB0YzQutC-0LPQviwgNSwg0JrQuNGX0LIsIDAyMDAw!5e1!3m2!1suk!2sua!4v1761307365885!5m2!1suk!2sua" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+					</div>
+					<div class="fs-6 mt-4">
+						<p class="mb-1">Kyiv region</p>
+						<p class="mb-1">Kyiv city</p>
+						<p class="mb-1">Hryshevskoho st. 5</p>
+					</div>
+				</div>
+			</div>
+		</main>
+	</div>
+</Layout>
+
+<style>
+	.map-wrap {
+		width: 100%;
+		height: 450px;
+	}
+	.map-block iframe {
+		width: 100%;
+		height: 450px;
+		border: none;
+		display: block;
+		border-radius: 20px;
+	}
+</style>

@@ -1,11 +1,98 @@
 ---
 import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import CottageCard from '../components/CottageCard.astro';
+
+import img1 from "../assets/images/3.jpg?url";
+import img2 from "../assets/images/6.jpg?url";
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
 <Layout>
-	<Welcome />
+	<div id="container">
+		<main class="container mt-4">
+			<h1 class="h1">Booking cottage</h1>
+			<p class="py-3 fs-3">
+				<b>Booking cottage</b> - Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequuntur excepturi eveniet nostrum! Magni placeat libero, delectus blanditiis aliquid velit quaerat excepturi quidem tempore, unde qui! Maxime cumque doloremque sunt corporis quisquam quos earum, impedit tempore doloribus dolore! Sint, corporis in ducimus esse ab, fugit placeat laudantium iure adipisci animi dolores!
+			</p>
+			<p class="py-2 fs-4"> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Adipisci, ratione hic? Dolores animi modi beatae itaque pariatur consectetur sint expedita id facilis quas. Iusto cupiditate assumenda sit consequatur, in facilis! </p>
+			
+			<div class="card-container d-flex flex-column flex-md-row justify-content-md-between gap-4 my-4">
+				<CottageCard 
+					primarySrc={img1} 
+					hoverSrc={img2}
+					title="Cottage 1" 
+					href="/cottage-1" 
+					alt="сottage-1"
+				/>
+				<CottageCard 
+					primarySrc={img1} 
+					hoverSrc={img2}
+					title="Cottage 2" 
+					href="/cottage-2" 
+					alt="сottage-2"
+				/>
+			</div>
+			
+			<div class="faq py-4">
+				<h2 class="h2 mb-3">Frequently Asked Questions</h2>
+				<div class="accordion" id="accordionExample">
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+						<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+							FAQ item #1
+						</button>
+						</h2>
+						<div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+							<div class="accordion-body">
+								<strong>Lorem ipsum dolor sit amet consectetur adipisicing.</strong>
+								<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et facilis corrupti quo doloribus quod, voluptatibus illum sit earum vero! Praesentium.</p>
+							</div>
+						</div>
+					</div>
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+						<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+							FAQ item #2
+						</button>
+						</h2>
+						<div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+							<div class="accordion-body">
+								<strong>Lorem ipsum dolor sit amet consectetur adipisicing.</strong>
+								<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Omnis veritatis quos reiciendis consequatur quam similique earum ad. Laboriosam, minus exercitationem!</p>
+							</div>
+						</div>
+					</div>
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+						<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+							FAQ item #3
+						</button>
+						</h2>
+						<div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+							<div class="accordion-body">
+								<strong>Lorem ipsum dolor sit amet consectetur adipisicing.</strong>
+								<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Omnis veritatis quos reiciendis consequatur quam similique earum ad. Laboriosam, minus exercitationem!</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</main>
+	</div>
 </Layout>
+
+<style>
+.card-container {
+	height: 400px;
+}
+
+#accordionExample .accordion-button{ background:#fff; }
+
+#accordionExample .accordion-button:not(.collapsed){ background:#fff; }
+
+</style>

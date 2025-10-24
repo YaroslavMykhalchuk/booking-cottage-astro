@@ -1,0 +1,52 @@
+---
+// /src/components/Navbar.astro
+// Props:
+// - current (string) : the current path to mark the active link (e.g. "/cottage-1")
+const { current = "/" } = Astro.props;
+
+const links = [
+    { title: "Home", href: "/" },
+    { title: "Cottage 1", href: "/cottage-1" },
+    { title: "Cottage 2", href: "/cottage-2" },
+    { title: "Cottage rules", href: "/rules" },
+    { title: "Contact", href: "/contact" },
+];
+---
+
+
+<nav class="navbar navbar-expand-md navbar-light bg-light" aria-label="Main navigation">
+    <div class="container-fluid container">
+        <a class="navbar-brand" href="/">Booking Cottage</a>
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavbar"
+            aria-controls="mainNavbar"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNavbar">
+            <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+                {links.map((link) => {
+                    const active = link.href === current;
+                    return (
+                        <li class="nav-item">
+                            <a
+                                class={`nav-link${active ? " active" : ""}`}
+                                href={link.href}
+                                aria-current={active ? "page" : undefined}
+                            >
+                                {link.title}
+                            </a>
+                        </li>
+                    );
+                })}
+            </ul>
+        </div>
+    </div>
+</nav>

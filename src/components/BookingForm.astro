@@ -1,0 +1,157 @@
+---
+    import "flatpickr/dist/flatpickr.min.css";
+
+    const { cottage } = Astro.props;
+    const api_base_url = "http://booking-cottage.loc";
+---
+
+<div class="alert alert-success d-flex justify-content-between d-none" role="alert">
+    <p class="success-text m-0"></p>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<div class="toast position-fixed bottom-0 end-0 m-3 toast-error" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+        <strong class="me-auto text-danger">Error booking</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body toast-error">
+    
+    </div>
+</div>
+
+<form id="booking-form" 
+    class="row g-3 needs-validation"
+    data-cottage={cottage}
+    data-api-url={api_base_url}
+    novalidate>
+    <input type="hidden" name="cottage" value={cottage}>
+
+    <input type="hidden" name="date_from" id="date_from">
+    <input type="hidden" name="date_to" id="date_to">
+
+    <div class="col-12 col-md-6">
+        <label for="flatpickr" class="form-label">Dates (arrival - departure)</label>
+        <input type="text" class="form-control" id="flatpickr" placeholder="Select a date range" required>
+        <div class="invalid-feedback">Select your arrival and departure dates.</div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <label for="name" class="form-label">Name and surname</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="John Doe" required>
+        <div class="invalid-feedback">Please enter your first and last name.</div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="email@gmail.com" required>
+        <div class="invalid-feedback">Please enter a valid email.</div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <label for="phone" class="form-label">Phone</label>
+        <input
+            type="tel"
+            class="form-control"
+            id="phone"
+            name="phone"
+            placeholder="Enter phone number"
+            required>
+        <div class="invalid-feedback">Вкажіть телефон у форматі +380XXXXXXXXX.</div>
+    </div>
+
+    <div class="col-12">
+        <label for="note" class="form-label">Additional notes</label>
+        <textarea class="form-control" id="note" name="note" rows="3" placeholder="Your notes..."></textarea>
+    </div>
+
+    <div class="col-12">
+        <button class="btn btn-primary" type="submit">Booking</button>
+    </div>
+</form>
+
+<style>
+    .toast-error { z-index: 1100; }
+</style>
+
+<script>
+    import flatpickr from "flatpickr";
+    // import { Ukrainian } from "flatpickr/dist/l10n/uk.js";
+    // flatpickr.localize(Ukrainian);
+
+    const form = document.getElementById('booking-form') as HTMLFormElement | null;
+    if(!form) {
+        console.error("Booking form not found!");
+    } else {
+        const cottage  = form.dataset.cottage;
+        const apiBase  = form.dataset.apiUrl;
+
+        const res = await fetch(`${apiBase}/api/${cottage}/not-available-days`, {
+            headers: { 'Accept': 'application/json' }
+        });
+
+        let disabledDates = await res.json();
+
+        flatpickr("#flatpickr", {
+            dateFormat: "Y-m-d",
+            minDate: "today",
+            mode: "range",
+            disable: disabledDates,
+            locale: {
+                firstDayOfWeek: 1,
+                rangeSeparator: " - "
+            },
+            onClose: function(selectedDates) {
+                if (selectedDates.length === 2) {
+                    const dateFrom = this.formatDate(selectedDates[0], 'Y-m-d');
+                    const dateTo   = this.formatDate(selectedDates[1], 'Y-m-d');
+                    document.getElementById('date_from').value = dateFrom;
+                    document.getElementById('date_to').value   = dateTo;
+                    console.log("Selected from:", dateFrom, "to:", dateTo);
+                }
+            }
+        });
+
+        function showSuccessAlert(msg: string) {
+                let successAlert = document.querySelector('.alert-success') as HTMLElement;
+                let successText  = successAlert.querySelector('.success-text') as HTMLElement;
+                successText.textContent = msg;
+                successAlert.classList.remove('d-none');
+        }
+
+        function showErrorToast(msg: string) {
+            let toastError = document.querySelector('.toast') as HTMLElement;
+            let errorText = toastError.querySelector('.toast-error') as HTMLElement;
+            errorText.textContent = msg;
+            toastError.classList.remove('d-none');
+            const toast = (window as any).bootstrap.Toast.getOrCreateInstance(toastError, {
+                autohide: true,
+                delay: 5000,
+            });
+            toast.show();
+        }
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+
+            const lang = navigator.language;
+            const formData = new FormData(form);
+
+            const response = await fetch(`${apiBase}/api/${lang}/booking`, {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                showSuccessAlert(result.success);
+                form.reset();
+            } else {
+                const errorData = await response.json();
+                showErrorToast(errorData.error);
+            }
+        });
+    }
+
+</script>
