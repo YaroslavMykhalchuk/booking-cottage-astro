@@ -3,6 +3,12 @@
 
     const { cottage } = Astro.props;
     const api_base_url = "http://booking-cottage.loc";
+
+    const res = await fetch(`${api_base_url}/api/${cottage}/not-available-days`, {
+        headers: { 'Accept': 'application/json' }
+    });
+
+        let disabledDates = await res.json();
 ---
 
 <div class="alert alert-success d-flex justify-content-between d-none" role="alert">
@@ -24,6 +30,7 @@
     class="row g-3 needs-validation"
     data-cottage={cottage}
     data-api-url={api_base_url}
+    data-disabled={JSON.stringify(disabledDates)}
     novalidate>
     <input type="hidden" name="cottage" value={cottage}>
 
@@ -76,8 +83,32 @@
 
 <script>
     import flatpickr from "flatpickr";
-    // import { Ukrainian } from "flatpickr/dist/l10n/uk.js";
-    // flatpickr.localize(Ukrainian);
+    
+    const htmlLang = document.documentElement.getAttribute('lang') || 'en';
+    const lang = htmlLang.split('-')[0];
+
+    async function loadFlatpickrLocale(code: string) {
+        try {
+            switch (code) {
+                case 'uk': {
+                const mod = await import('flatpickr/dist/l10n/uk.js');
+                return mod.Ukrainian;
+                }
+                case 'ru': {
+                const mod = await import('flatpickr/dist/l10n/ru.js');
+                return mod.Russian;
+                }
+                case 'ka': {
+                const mod = await import('flatpickr/dist/l10n/ka.js');
+                return mod.Georgian ?? mod.default ?? undefined;
+                }
+                default:
+                return undefined;
+            }
+        }   catch {
+            return undefined;
+        }
+    }
 
     const form = document.getElementById('booking-form') as HTMLFormElement | null;
     if(!form) {
@@ -85,19 +116,19 @@
     } else {
         const cottage  = form.dataset.cottage;
         const apiBase  = form.dataset.apiUrl;
+        const disabledDates = JSON.parse(form.dataset.disabled || '[]');
 
-        const res = await fetch(`${apiBase}/api/${cottage}/not-available-days`, {
-            headers: { 'Accept': 'application/json' }
-        });
+        const fpLocale = await loadFlatpickrLocale(lang);
 
-        let disabledDates = await res.json();
-
-        flatpickr("#flatpickr", {
+        let calendar = flatpickr("#flatpickr", {
             dateFormat: "Y-m-d",
+            altInput: true,
+            altFormat: "F j, Y",
             minDate: "today",
             mode: "range",
             disable: disabledDates,
             locale: {
+                ...fpLocale,
                 firstDayOfWeek: 1,
                 rangeSeparator: " - "
             },
