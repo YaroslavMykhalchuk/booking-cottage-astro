@@ -83,7 +83,7 @@
 
 <script>
     import flatpickr from "flatpickr";
-    
+
     const htmlLang = document.documentElement.getAttribute('lang') || 'en';
     const lang = htmlLang.split('-')[0];
 
@@ -178,6 +178,7 @@
                 const result = await response.json();
                 showSuccessAlert(result.success);
                 form.reset();
+                calendar.clear();
             } else {
                 const errorData = await response.json();
                 showErrorToast(errorData.error);

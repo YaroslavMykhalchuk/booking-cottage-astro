@@ -3,15 +3,17 @@ import { languages } from '../i18n/ui';
 import { getPathWithoutLang, useTranslatedPath } from '../i18n/utils';
 
 const basePath = getPathWithoutLang(Astro.url);
+const currentPath = Astro.url.pathname;
 ---
 
-<ul>
+<select onchange="window.location.href=this.value">
     {Object.entries(languages).map(([lang, label]) => {
         const translatePath = useTranslatedPath(lang as keyof typeof languages);
+        const targetPath = translatePath(basePath);
         return (
-            <li>
-                <a href={translatePath(basePath)}>{label}</a>
-            </li>
+            <option value={targetPath} selected={targetPath === currentPath}>
+                {label}
+            </option>
         );
     })}
-</ul>
+</select>
