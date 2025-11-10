@@ -1,12 +1,11 @@
 ---
 import LanguagePicker from './LanguagePicker.astro';
-import { getLangFromUrl, useTranslations, useTranslatedPath } from '../i18n/utils';
+import { getLangFromUrl, useTranslations, useTranslatedPath, getPathWithoutLang } from '../i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
-
-const { current = "/" } = Astro.props;
+const currentPath = getPathWithoutLang(Astro.url);
 
 const links = [
   { title: t('nav.home'),     href: '/' },
@@ -21,17 +20,17 @@ const links = [
     <div class="container-fluid container">
         <a class="navbar-brand" href={translatePath('/')}>Booking Cottage</a>
 
-        <button class="navbar-toggler" ...>
-            <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="mainNavbar">
             <ul class="navbar-nav ms-auto mb-2 mb-md-0">
                 {links.map((link) => {
-                const active = link.href === current;
+                const active = link.href === currentPath;
                 return (
                     <li class="nav-item">
-                    <a class={`nav-link${active ? " active" : ""}`} href={translatePath(link.href)}>
+                    <a class={`nav-link${active ? ' active' : ''}`} href={translatePath(link.href)}>
                         {link.title}
                     </a>
                     </li>
